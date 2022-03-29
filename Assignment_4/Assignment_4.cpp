@@ -15,7 +15,7 @@ class wordle
     std::vector<std::string> dictionary;
     std::string wordAnswer;     //word randomly chosen to be the answer
     std::string word;           //user inputted word
-    int currectCount = 0;       //used to check if all letters are correct (when currectCount=5)
+    
 
     //A function that checks if the inputted word exists within the provided dictionary
     bool wordExists(std::string word, std::vector<std::string> dictionary)
@@ -67,6 +67,7 @@ public:
 
     //Everything here is public, and can be accessed from the main() function  
 
+    int currectCount = 0;       //used to check if all letters are correct (when currectCount=5)
 
     //a function that opens the dictionary text file, and pushes it into the dictionary vector
     void openLibrary(std::string dictionaryFile)
@@ -127,20 +128,9 @@ public:
             }
                 
         }
+
     }
 
-    bool winLose()
-    {
-        if (currectCount == 5)
-        {
-            return true;
-        }
-
-        else
-        {
-            return false;
-        }
-    }
 
 };
 
@@ -160,14 +150,15 @@ int main()
         game.inputWord();
         game.check();
 
-        if (game.winLose())
+        if (game.currectCount==5)
         {
             std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m";
             break;
         }
+        game.currectCount = 0;
     }
 
-    if (!game.winLose())
+    if (game.currectCount != 5)
     {
         std::cout << "\x1B[31m" << "\nYOU LOSE :(" << "\x1B[0m";
     }
