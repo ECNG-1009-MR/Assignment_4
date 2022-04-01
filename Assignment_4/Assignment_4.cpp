@@ -14,8 +14,6 @@ class wordle
     //Everything here is private, because there's no need to access them from the main() function
 
     std::vector<std::string> dictionary;
-    std::string wordAnswer;     //word randomly chosen to be the answer
-    std::string word;           //user inputted word
     
 
     //A function that checks if the inputted word exists within the provided dictionary
@@ -51,9 +49,10 @@ class wordle
     //A function that checks how many times a letter occurs in a word
     int multipleLetters(std::string word, char letter)
     {
-        size_t letterFreq = std::count(word.begin(), word.end(), letter);
+        int letterFreq = std::count(word.begin(), word.end(), letter);
         return letterFreq;
     }
+
 
     //A function that checks if the letter exists in the file
     bool letterExists(std::string word, char letter)
@@ -68,6 +67,8 @@ public:
 
     //Everything here is public, and can be accessed from the main() function  
 
+    std::string wordAnswer;     //word randomly chosen to be the answer
+    std::string word;           //user inputted word
     int currectCount = 0;       //used to check if all letters are correct (when currectCount=5)
 
     //a function that opens the dictionary text file, and pushes it into the dictionary vector
@@ -100,11 +101,22 @@ public:
     {
         std::cout << "Input: ";
         std::cin >> word;
+
+        //Loop coverts all capital letters to common
+        for (int z = 0; z < word.size(); z++)
+        {
+            if (isupper(word[z]))
+            {
+                word[z] = std::tolower(word[z]);
+            }
+        }
+
+        
         while (!wordExists(word, dictionary) || !fiveLetters(word))
         {
             std::cout << "Error! Either input does not exist in our dictionary, or the input is not 5 letters" << std::endl;
             std::cout << "Input: ";
-            std::cin >> word;
+            std::cin >> word;         
             wordExists(word, dictionary);
         }
     }
@@ -120,6 +132,7 @@ public:
 
         for (int i = 0; i < word.size(); i++)
         {
+
             if (word[i] == wordAnswer[i])
             {
                // std::cout << "\x1B[42m" << word[i] << "\x1B[0m";                //green: correct letter and correct position
@@ -222,17 +235,18 @@ int main()
         game.inputWord();
         game.check();
 
-        if (game.currectCount==5)
+        if (game.word == game.wordAnswer)
         {
             std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m";
-            break;
+            i = 6;      //increment i so that the loop breaks without having to use a break statement
         }
         game.currectCount = 0;
     }
 
-    if (game.currectCount != 5)
+    if (game.word != game.wordAnswer)
     {
-        std::cout << "\x1B[31m" << "\nYOU LOSE :(" << "\x1B[0m";
+        std::cout << "\x1B[31m" << "\nYOU LOSE :(" << "\x1B[0m" << std::endl;
+        std::cout << "Answer: " << game.wordAnswer << std::endl;
     }
 
     return 0;
