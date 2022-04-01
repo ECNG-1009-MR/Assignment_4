@@ -92,7 +92,7 @@ public:
         std::uniform_int_distribution <int> range(0, dictionary.size());
 
         randIndex = range(eng);
-        wordAnswer = "plate";//dictionary[randIndex];
+        wordAnswer = "tools";//dictionary[randIndex];
         std::cout << "Answer: " << wordAnswer << std::endl;
     }
 
@@ -169,9 +169,10 @@ public:
 
         for (int i = 0; i < word.size(); i++)
         {
-            if (!usedLetter[i]) //Checks to see which letter was used already before so the comparsion doesn't repeat it for the input word
+            //if (!usedLetter[i]) //Checks to see which letter was used already before so the comparsion doesn't repeat it for the input word
+            for (int j = 0; j < word.size(); j++)
             {
-                for (int j = 0; j < word.size(); j++)
+                if (WordStat[i] == NotInWord)
                 {
                     if (!usedLetter[j])  //Checks to make sure the correct letters in the answer word doesn't repeat
                     {
@@ -181,16 +182,16 @@ public:
                             WordStat[i] = WrongPos;
                             usedLetter[j] = 1;
                         }*/
-                        if (word[i] == wordAnswer[j] && multipleLetters(word, word[i]) > 1)
+                        /*if (word[i] == wordAnswer[j] && multipleLetters(word, word[i]) > 1)
                         {
                             WordStat[i] = WrongPos;
                             usedLetter[j] = 1;
-                        }
+                        }*/
                       
-                        else if (word[i] == wordAnswer[j])
+                        if (word[i] == wordAnswer[j])
                         {
                             WordStat[i] = WrongPos;
-                            
+                            usedLetter[j] = 1;
                         }
                     }                    
                 }             
