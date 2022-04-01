@@ -147,7 +147,7 @@ public:
         }
 
 
-        //--------------- MAP --------------
+        //--------------- MAP -------------- // Map could be deleted
 
 
         //std::map<char, int> ansLetters;
