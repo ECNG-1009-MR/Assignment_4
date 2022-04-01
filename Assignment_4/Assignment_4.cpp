@@ -5,6 +5,7 @@
 #include <random>
 #include <cmath>
 #include <algorithm>
+#include <map>
 
 
 //A class for all the functionality of the original Wordle game
@@ -90,7 +91,7 @@ public:
         std::uniform_int_distribution <int> range(0, dictionary.size());
 
         randIndex = range(eng);
-        wordAnswer = dictionary[randIndex];
+        wordAnswer = "plate";//dictionary[randIndex];
         std::cout << "Answer: " << wordAnswer << std::endl;
     }
 
@@ -110,25 +111,96 @@ public:
 
     //Primary function of the game: checks if the letter is in the correct space or exists in the word
     void check()
-    {        
+    {  
+        std::vector<bool> usedLetter = { 0,0,0,0,0};
+        std::vector<std::string> WordStat = {"","","","",""};
+        std::string CorrectPos = "\x1B[42m";  //green colour
+        std::string NotInWord = "\x1B[0m";      //white colour
+        std::string WrongPos = "\x1B[43m";      //yellow colour
+
         for (int i = 0; i < word.size(); i++)
         {
             if (word[i] == wordAnswer[i])
             {
-                std::cout << "\x1B[42m" << word[i] << "\x1B[0m";                //green: correct letter and correct position
-                currectCount++;
-            }
-            else if (letterExists(wordAnswer, word[i]))
-            {
-                std::cout << "\x1B[43m" << word[i] << "\x1B[0m";                //yellow: correct letter but wrong position
+               // std::cout << "\x1B[42m" << word[i] << "\x1B[0m";                //green: correct letter and correct position
+                usedLetter[i] = 1;
+                WordStat[i] = CorrectPos;
             }
             else
             {
-                std::cout << "\x1B[47m" << "\x1B[30m" << word[i] << "\x1B[0m";  //grey: letter does not exist in word 
+                //std::cout << "\x1B[47m" << "\x1B[30m" << word[i] << "\x1B[0m";  //grey: letter does not exist in word 
+                WordStat[i] = NotInWord;
             }
-                
         }
 
+
+        //--------------- MAP --------------
+
+
+        //std::map<char, int> ansLetters;
+        std::map<char, int> inputLetters;
+
+       /* for (int i = 0; i < wordAnswer.size(); i++)
+        {
+            ansLetters.insert(std::pair<char, int>(wordAnswer[i], multipleLetters(wordAnswer, wordAnswer[i])));
+        }*/
+
+        for (int i = 0; i < word.size(); i++)
+        {
+            if (!usedLetter[i]) {
+                inputLetters.insert(std::pair<char, int>(word[i], multipleLetters(word, word[i])));
+            }            
+        }
+
+        // ---------------------------------------------------------
+
+        for (int i = 0; i < word.size(); i++)
+        {
+            if (!usedLetter[i]) //Checks to see which letter was used already before so the comparsion doesn't repeat it for the input word
+            {
+                for (int j = 0; j < word.size(); j++)
+                {
+                    if (!usedLetter[j])  //Checks to make sure the correct letters in the answer word doesn't repeat
+                    {
+                        
+                        /*if (word[i] == wordAnswer[j] && multipleLetters(word, word[i])  > inputLetters[word[i]])
+                        {
+                            WordStat[i] = WrongPos;
+                            usedLetter[j] = 1;
+                        }*/
+                        if (word[i] == wordAnswer[j] && multipleLetters(word, word[i]) > 1)
+                        {
+                            WordStat[i] = WrongPos;
+                            usedLetter[j] = 1;
+                        }
+                      
+                        else if (word[i] == wordAnswer[j])
+                        {
+                            WordStat[i] = WrongPos;
+                            
+                        }
+                    }                    
+                }             
+
+            }
+
+        }
+
+        /*for (int i = 0; i < word.size(); i++) {
+
+           if (usedLetter[i] = 0 && multipleLetters(wordAnswer, word[i]) > 1)
+           {
+                WordStat[i] = WrongPos;
+
+           }
+        
+        }*/
+
+        for (int i = 0; i < word.size(); i++)
+        {
+            std::cout << WordStat[i] << word[i] << "\x1B[0m";
+
+        }
     }
 
 
