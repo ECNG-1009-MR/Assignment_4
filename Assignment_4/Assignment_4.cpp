@@ -31,7 +31,7 @@ class wordle
 
     }
 
-    //A function that makes sure the word is only three letters long
+    //A function that makes sure the word is only five letters long
     bool fiveLetters(std::string word)
     {
         if (word.size() > 5 || word.size() < 5)
@@ -46,22 +46,6 @@ class wordle
 
     }
 
-    //A function that checks how many times a letter occurs in a word
-    int multipleLetters(std::string word, char letter)
-    {
-        int letterFreq = std::count(word.begin(), word.end(), letter);
-        return letterFreq;
-    }
-
-
-    //A function that checks if the letter exists in the file
-    bool letterExists(std::string word, char letter)
-    {
-        if (word.find(letter) != std::string::npos)
-            return true;
-        else
-            return false;
-    }
 
 public:
 
@@ -69,7 +53,6 @@ public:
 
     std::string wordAnswer;     //word randomly chosen to be the answer
     std::string word;           //user inputted word
-    int currectCount = 0;       //used to check if all letters are correct (when currectCount=5)
 
     //a function that opens the dictionary text file, and pushes it into the dictionary vector
     void openLibrary(std::string dictionaryFile)
@@ -127,7 +110,7 @@ public:
         std::vector<bool> usedLetter = { 0,0,0,0,0};
         std::vector<std::string> WordStat = {"","","","",""};
         std::string CorrectPos = "\x1B[42m";  //green colour
-        std::string NotInWord = "\x1B[0m";      //white colour
+        std::string NotInWord = "\x1B[30m\x1B[47m";      //white colour
         std::string WrongPos = "\x1B[43m";      //yellow colour
 
         for (int i = 0; i < word.size(); i++)
@@ -199,7 +182,6 @@ int main()
             std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m";
             i = 6;      //increment i so that the loop breaks without having to use a break statement
         }
-        game.currectCount = 0;
     }
 
     if (game.word != game.wordAnswer)
@@ -211,93 +193,3 @@ int main()
     return 0;
 }
 
-/*
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <windows.h>
-
-
-int main()
-{
-    std::ifstream input;
-    input.open("TestDictionary.txt");
-    std::vector<std::string>  possiblewords;
-    std::string wordoa;
-    while (input >> wordoa)
-    {
-        possiblewords.push_back(wordoa);
-    }
-    srand((unsigned)time(0));
-    int randomnumber;
-    randomnumber = (rand() % possiblewords.size()) ;
-
-    std::string currentword;
-    currentword = possiblewords[randomnumber];
-    //std::cout << currentword << std::endl;
-    std::string guess;
-
-    for (int i = 0; i < 5; i++)
-    {
-        std::cout << "enter guess" << std::endl;
-        std::cin >> guess;
-        if (std::count(possiblewords.begin(), possiblewords.end(), guess))
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                bool found = 0;
-                bool correctplace = 0;
-                for (int k = 0; k < 5; k++)
-                {
-                    if (guess[j]==currentword[k])
-                    {
-                        found++;
-                    }
-                    else if (guess[j] == currentword[j])
-                    {
-                        correctplace = 1;
-                    }
-
-                }
-                HANDLE  hConsole;
-                hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-                if (correctplace == 1)
-                {
-                    SetConsoleTextAttribute(hConsole, 10);
-                    std::cout << guess[j];
-                }
-                else if (found == 1)
-                {
-                    SetConsoleTextAttribute(hConsole, 12); // 14 is yellow 12 is red
-                    std::cout << guess[j];
-                }
-                else if(found == 0)
-                {
-                    std::cout << guess[j];
-                }
-                SetConsoleTextAttribute(hConsole, 15);
-            }
-            std::cout << " " << std::endl;
-        }
-        else
-        {
-            std::cout << "invalid word" << std::endl;
-            i--;
-        }
-        if (guess == currentword)
-        {
-            std::cout << "winner" << std::endl;
-            break;
-        }
-    }
-    if (guess != currentword)
-    {
-        std::cout << "loser" << std::endl << "the word was " << currentword;
-    }
-    return 0;
-}
-
-
-*/
