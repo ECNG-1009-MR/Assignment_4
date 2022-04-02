@@ -198,7 +198,26 @@ public:
     //random index generator
     //print functions
 
+    void calculatePoints(int attempt, int mode)
+    {
+        float pointsList[6] = { 100.0, 80.0, 60.0, 40.0, 20.0, 10.0 };
+        float multiplierList[3] = { 1, 1.5, 2 };
+        float points = 0.0;
+        if (attempt == 1) { points = pointsList[0]; }        //100 points for solving in 1 attempt
+        else if (attempt == 2) { points = pointsList[1]; }   //80 points for solving in 2 attempts
+        else if (attempt == 3) { points = pointsList[2]; }   //60 points for solving in 3 attempts
+        else if (attempt == 4) { points = pointsList[3]; }   //40 points for solving in 4 attempts
+        else if (attempt == 5) { points = pointsList[4]; }   //20 points for solving in 5 attempts
+        else if (attempt == 6) { points = pointsList[5]; }   //10 points for solving in 6 attempts
 
+        if (mode == 1) { points *= multiplierList[0]; }         //Multiplier is 1 for easy mode
+        else if (mode == 2) { points *= multiplierList[1]; }    //Multiplier is 1.5 for medium mode
+        else if (mode == 3) { points *= multiplierList[2]; }    //Multiplier is 2 for hard mode
+
+     
+        std::cout << "Score: " << "\x1B[42m" << points << "\x1B[0m" << std::endl;
+
+    }
    
     void printFunction(int index)
     {
@@ -238,8 +257,30 @@ public:
     }
 
 
+    //Modified version of gameFunction(). This is 'Runtime Polymorphism' - 'Function overriding'.
+    void gameFunction()
+    {
+        int attemptsNum = 6;    //number of attempts at guessing the word
+        for (int i = 1; i <= attemptsNum; i++)
+        {
+            std::cout << "\n\nAttempt #" << i << ": " << std::endl;
+            inputWord();
+            check();
 
-    //gameFunction() with points
+            if (word == wordAnswer)
+            {
+                std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m" << std::endl;
+                calculatePoints(i, 3);
+                i = attemptsNum + 1;      //increment i so that the loop breaks without having to use a break statement
+            }
+        }
+
+        if (word != wordAnswer)
+        {
+            std::cout << "\x1B[31m" << "\nYOU LOSE :(" << "\x1B[0m" << std::endl;
+            std::cout << "Answer: " << wordAnswer << std::endl;
+        }
+    }
     
 };
 
