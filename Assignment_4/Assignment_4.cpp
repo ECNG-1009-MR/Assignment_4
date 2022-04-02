@@ -92,7 +92,7 @@ public:
         std::uniform_int_distribution <int> range(0, dictionary.size());
 
         randIndex = range(eng);
-        wordAnswer = "tools";//dictionary[randIndex];
+        wordAnswer = "plate";//dictionary[randIndex];
         std::cout << "Answer: " << wordAnswer << std::endl;
     }
 
@@ -133,83 +133,41 @@ public:
         for (int i = 0; i < word.size(); i++)
         {
 
-            if (word[i] == wordAnswer[i])
-            {
-               // std::cout << "\x1B[42m" << word[i] << "\x1B[0m";                //green: correct letter and correct position
+            if (word[i] == wordAnswer[i])       //Checks if the word is in the correct place 
+            {               
                 usedLetter[i] = 1;
                 WordStat[i] = CorrectPos;
             }
             else
             {
-                //std::cout << "\x1B[47m" << "\x1B[30m" << word[i] << "\x1B[0m";  //grey: letter does not exist in word 
+                
                 WordStat[i] = NotInWord;
             }
         }
 
 
-        //--------------- MAP -------------- // Map could be deleted
-
-
-        //std::map<char, int> ansLetters;
-        std::map<char, int> inputLetters;
-
-       /* for (int i = 0; i < wordAnswer.size(); i++)
-        {
-            ansLetters.insert(std::pair<char, int>(wordAnswer[i], multipleLetters(wordAnswer, wordAnswer[i])));
-        }*/
-
+       
         for (int i = 0; i < word.size(); i++)
         {
-            if (!usedLetter[i]) {
-                inputLetters.insert(std::pair<char, int>(word[i], multipleLetters(word, word[i])));
-            }            
-        }
-
-        // ---------------------------------------------------------
-
-        for (int i = 0; i < word.size(); i++)
-        {
-            //if (!usedLetter[i]) //Checks to see which letter was used already before so the comparsion doesn't repeat it for the input word
+            //if (!usedLetter[i]) //Checks to see which letter was used already before so the comparison doesn't repeat it for the input word
             for (int j = 0; j < word.size(); j++)
             {
                 if (WordStat[i] == NotInWord)
                 {
                     if (!usedLetter[j])  //Checks to make sure the correct letters in the answer word doesn't repeat
-                    {
-                        
-                        /*if (word[i] == wordAnswer[j] && multipleLetters(word, word[i])  > inputLetters[word[i]])
-                        {
-                            WordStat[i] = WrongPos;
-                            usedLetter[j] = 1;
-                        }*/
-                        /*if (word[i] == wordAnswer[j] && multipleLetters(word, word[i]) > 1)
-                        {
-                            WordStat[i] = WrongPos;
-                            usedLetter[j] = 1;
-                        }*/
-                      
+                    {                     
+                                            
                         if (word[i] == wordAnswer[j])
                         {
                             WordStat[i] = WrongPos;
                             usedLetter[j] = 1;
                         }
                     }                    
-                }             
-
+                }          
             }
-
         }
 
-        /*for (int i = 0; i < word.size(); i++) {
-
-           if (usedLetter[i] = 0 && multipleLetters(wordAnswer, word[i]) > 1)
-           {
-                WordStat[i] = WrongPos;
-
-           }
         
-        }*/
-
         for (int i = 0; i < word.size(); i++)
         {
             std::cout << WordStat[i] << word[i] << "\x1B[0m";
