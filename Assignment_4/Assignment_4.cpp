@@ -234,9 +234,9 @@ int main()
 
     //choose difficulty
     //random index generator
-    //print functions
+    //3 print functions
 
-    //gameFunction() with points
+    //final gameFunction() modification
 
 };
 
