@@ -175,7 +175,7 @@ public:
             if (word == wordAnswer)
             {
                 std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m";
-                i = 6;      //increment i so that the loop breaks without having to use a break statement
+                i = attemptsNum+1;      //increment i so that the loop breaks without having to use a break statement
             }
         }
 
@@ -192,60 +192,11 @@ public:
 class modifiedWordle : public wordle
 {
 
-    void check()
-    {
-        std::vector<bool> usedLetter = { 0,0,0,0,0 };
-        std::vector<std::string> WordStat = { "","","","","" };
-        std::string CorrectPos = "\x1B[42m";  //green colour
-        std::string NotInWord = "\x1B[30m\x1B[47m";      //white colour
-        std::string WrongPos = "\x1B[43m";      //yellow colour
+    //choose difficulty
+    //random index generator
+    //3 print functions
 
-        for (int i = 0; i < word.size(); i++)
-        {
-
-            if (word[i] == wordAnswer[i])       //Checks if the word is in the correct place 
-            {
-                usedLetter[i] = 1;
-                WordStat[i] = CorrectPos;
-            }
-            else
-            {
-
-                WordStat[i] = NotInWord;
-            }
-        }
-
-
-
-        for (int i = 0; i < word.size(); i++)
-        {
-            //if (!usedLetter[i]) //Checks to see which letter was used already before so the comparison doesn't repeat it for the input word
-            for (int j = 0; j < word.size(); j++)
-            {
-                if (WordStat[i] == NotInWord)
-                {
-                    if (!usedLetter[j])  //Checks to make sure the correct letters in the answer word doesn't repeat
-                    {
-
-                        if (word[i] == wordAnswer[j])
-                        {
-                            WordStat[i] = WrongPos;
-                            usedLetter[j] = 1;
-                        }
-                    }
-                }
-            }
-        }
-
-
-        for (int i = 0; i < word.size(); i++)
-        {
-            std::cout << WordStat[i] << word[i] << "\x1B[0m";
-
-        }
-    }
-
-
+    //final gameFunction() modification
 
 };
 
