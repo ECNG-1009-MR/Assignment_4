@@ -86,7 +86,7 @@ public:
         std::uniform_int_distribution <int> range(0, dictionary.size());
 
         randIndex = range(eng);
-        wordAnswer = "plate";//dictionary[randIndex];
+        wordAnswer = dictionary[randIndex];
         std::cout << "Answer: " << wordAnswer << std::endl;
     }
 
@@ -118,6 +118,9 @@ public:
         std::string NotInWord = "\x1B[30m\x1B[47m";      //white colour
         std::string WrongPos = "\x1B[43m";      //yellow colour
 
+
+        //Checks for words to see if it's in the correct position and then assigns "CorrectPos"
+        //If not in the correct position, assigns "WrongPos"
         for (int i = 0; i < word.size(); i++)
         {
 
@@ -134,7 +137,7 @@ public:
         }
 
 
-
+        //Checks for words that was assigned "WrongPos" compares to each unused letter in the "wordAnswer"
         for (int i = 0; i < word.size(); i++)
         {
             //if (!usedLetter[i]) //Checks to see which letter was used already before so the comparison doesn't repeat it for the input word
@@ -155,11 +158,10 @@ public:
             }
         }
 
-
+        //Prints Letters
         for (int i = 0; i < word.size(); i++)
         {
             std::cout << WordStat[i] << word[i] << "\x1B[0m";
-
         }
     }
 
@@ -191,13 +193,54 @@ public:
 
 class modifiedWordle : public wordle
 {
-
-    //choose difficulty
+public:
+    
     //random index generator
     //print functions
 
-    //gameFunction() with points
 
+   
+    void printFunction(int index)
+    {
+        //std::vector<int> index = { 0, 4 }; //randomIndexgenerator();
+
+        for (int i = 0; i < index; i++)
+        {
+            std::cout << "_ ";
+        }
+
+        std::cout << wordAnswer[index] << " ";
+
+        for (int i = index + 1; i < wordAnswer.size(); i++)
+        {
+            std::cout << "_ ";
+        }
+    }
+
+    void printFunction(int index1, int index2)
+    {
+        //std::vector<int> index =  {3, 4}; //randomIndexgenerator();
+
+        for (int i = 0; i < index1; i++)
+        {
+            std::cout << "_ ";
+        }
+        std::cout << wordAnswer[index1] << " ";
+        for (int i = index1+1; i < index2; i++)
+        {
+            std::cout << "_ ";
+        }
+        std::cout << wordAnswer[index2] << " ";
+        for (int i = index2+1; i < wordAnswer.size(); i++)
+        {
+            std::cout << "_ ";
+        }
+    }
+
+
+
+    //gameFunction() with points
+    
 };
 
 
@@ -210,7 +253,7 @@ int main()
     game.selectWord();
     game.gameFunction();
 
-
+    //game.printFunction(0,4);
 
 
     return 0;
