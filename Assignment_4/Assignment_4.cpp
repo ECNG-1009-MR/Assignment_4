@@ -256,6 +256,32 @@ public:
         }
     }
 
+    int chooseDifficulty()
+    {
+        int difficulty;
+        std::cout << "Please choose difficulty \n 1. easy (X1 multiplier) \n 2. medium (X1.5 multiplier) \n 3. hard (X2 mulitplier) \n";
+        std::cin >> difficulty;
+        return difficulty;
+    }
+
+    std::vector<int> randomIndexgenerator(int choice)
+    {
+        srand(time(NULL));
+        std::vector<int> index;
+        for (int i = 0; i < choice; i++)
+        {
+            index.push_back(rand() % 5);
+        }
+        if (index.size() > 1 && index.front() == index.back())
+        {
+            while (index.front() == index.back())
+            {
+                index.front() = rand() % 5;
+            }
+        }
+        return index;
+    }
+
 
     //Modified version of gameFunction(). This is 'Runtime Polymorphism' - 'Function overriding'.
     void gameFunction()
