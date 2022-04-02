@@ -194,13 +194,12 @@ int main()
         game.inputWord();
         game.check();
 
-        if (game.word == game.wordAnswer)
-        {
-            std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m";
-            i = 6;      //increment i so that the loop breaks without having to use a break statement
+            if (word == wordAnswer)
+            {
+                std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m";
+                i = attemptsNum+1;      //increment i so that the loop breaks without having to use a break statement
+            }
         }
-        game.currectCount = 0;
-    }
 
     if (game.word != game.wordAnswer)
     {
@@ -233,69 +232,27 @@ int main()
     int randomnumber;
     randomnumber = (rand() % possiblewords.size()) ;
 
-    std::string currentword;
-    currentword = possiblewords[randomnumber];
-    //std::cout << currentword << std::endl;
-    std::string guess;
+    //choose difficulty
+    //random index generator
+    //3 print functions
 
-    for (int i = 0; i < 5; i++)
-    {
-        std::cout << "enter guess" << std::endl;
-        std::cin >> guess;
-        if (std::count(possiblewords.begin(), possiblewords.end(), guess))
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                bool found = 0;
-                bool correctplace = 0;
-                for (int k = 0; k < 5; k++)
-                {
-                    if (guess[j]==currentword[k])
-                    {
-                        found++;
-                    }
-                    else if (guess[j] == currentword[j])
-                    {
-                        correctplace = 1;
-                    }
+    //final gameFunction() modification
 
-                }
-                HANDLE  hConsole;
-                hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+};
 
-                if (correctplace == 1)
-                {
-                    SetConsoleTextAttribute(hConsole, 10);
-                    std::cout << guess[j];
-                }
-                else if (found == 1)
-                {
-                    SetConsoleTextAttribute(hConsole, 12); // 14 is yellow 12 is red
-                    std::cout << guess[j];
-                }
-                else if(found == 0)
-                {
-                    std::cout << guess[j];
-                }
-                SetConsoleTextAttribute(hConsole, 15);
-            }
-            std::cout << " " << std::endl;
-        }
-        else
-        {
-            std::cout << "invalid word" << std::endl;
-            i--;
-        }
-        if (guess == currentword)
-        {
-            std::cout << "winner" << std::endl;
-            break;
-        }
-    }
-    if (guess != currentword)
-    {
-        std::cout << "loser" << std::endl << "the word was " << currentword;
-    }
+
+
+int main()
+{
+    wordle game;            //creates the object for the wordle class
+
+    game.openLibrary("TestDictionary.txt");     //pass the filename of the dictionary as an argument
+    game.selectWord();
+    game.gameFunction();
+
+
+    
+
     return 0;
 }
 
