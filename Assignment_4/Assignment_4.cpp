@@ -126,7 +126,7 @@ public:
     {  
         std::vector<bool> usedLetter = { 0,0,0,0,0};
         std::vector<std::string> WordStat = {"","","","",""};
-        std::string CorrectPos = "\x1B[42m";  //green colour
+        std::string CorrectPos = "\x1B[42m";    //green colour
         std::string NotInWord = "\x1B[0m";      //white colour
         std::string WrongPos = "\x1B[43m";      //yellow colour
 
