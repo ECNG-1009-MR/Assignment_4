@@ -46,6 +46,7 @@ class wordle
 
     }
 
+    //A function to convert all letters in a provided string to lower-case
     void covenverToLower(std::string& word)
     {
         for (int z = 0; z < word.size(); z++)
@@ -115,9 +116,9 @@ public:
     {
         std::vector<bool> usedLetter = { 0,0,0,0,0 };
         std::vector<std::string> WordStat = { "","","","","" };
-        std::string CorrectPos = "\x1B[42m";  //green colour
-        std::string NotInWord = "\x1B[30m\x1B[47m";      //white colour
-        std::string WrongPos = "\x1B[43m";      //yellow colour
+        std::string CorrectPos = "\x1B[42m";            //green colour
+        std::string NotInWord = "\x1B[30m\x1B[47m";     //white colour
+        std::string WrongPos = "\x1B[43m";              //yellow colour
 
 
         //Checks for words to see if it's in the correct position and then assigns "CorrectPos"
@@ -168,6 +169,7 @@ public:
         }
     }
 
+    //A function just to print ASCII art for win screen
     void winBanner()
     {
         std::cout << "\x1B[32m\n";
@@ -184,6 +186,7 @@ public:
         std::cout << "\x1B[0m";
     }
 
+    //A function containing the main sequence of the game
     void gameFunction()
     {
         selectWord();
@@ -208,7 +211,7 @@ public:
         }
     }
 
-
+    //A function just used to print the title banner of the wordle version
     void banner()
     {
         std::cout <<" +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+ " << std::endl;
@@ -218,6 +221,7 @@ public:
 
 };
 
+//A child class that inherits from the parent wordle class
 class modifiedWordle : public wordle
 {
 public:
