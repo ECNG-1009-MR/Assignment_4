@@ -219,16 +219,22 @@ public:
 
     }
    
-    void printFunction(int index)
+    void printFunction()
     {
-        //std::vector<int> index = { 0, 4 }; //randomIndexgenerator();
+        for (int i = 0; i <  wordAnswer.size(); i++)
+        {
+            std::cout << "_ ";
+        }
+    }
 
+    void printFunction(int index)
+    {        
         for (int i = 0; i < index; i++)
         {
             std::cout << "_ ";
         }
 
-        std::cout << wordAnswer[index] << " ";
+        std::cout << "\x1B[42m" << wordAnswer[index] << "\x1B[0m" << " ";
 
         for (int i = index + 1; i < wordAnswer.size(); i++)
         {
@@ -237,29 +243,37 @@ public:
     }
 
     void printFunction(int index1, int index2)
-    {
-        //std::vector<int> index =  {3, 4}; //randomIndexgenerator();
+    {        
+        if( index1 > index2 )
+        {
+            int tmp = index2;
+            index2 = index1;
+            index1 = tmp;
+        }
 
         for (int i = 0; i < index1; i++)
         {
             std::cout << "_ ";
         }
-        std::cout << wordAnswer[index1] << " ";
+        std::cout << "\x1B[42m" << wordAnswer[index1] << "\x1B[0m" << " ";
         for (int i = index1+1; i < index2; i++)
         {
             std::cout << "_ ";
         }
-        std::cout << wordAnswer[index2] << " ";
+        std::cout << "\x1B[42m" << wordAnswer[index2] << "\x1B[0m" << " ";
         for (int i = index2+1; i < wordAnswer.size(); i++)
         {
             std::cout << "_ ";
         }
     }
 
+
+
+
     int chooseDifficulty()
     {
         int difficulty;
-        std::cout << "Please choose difficulty \n 1. easy (X1 multiplier) \n 2. medium (X1.5 multiplier) \n 3. hard (X2 mulitplier) \n";
+        std::cout << "Please choose difficulty: \n 1. Easy (X1 multiplier) \n 2. Medium (X1.5 multiplier) \n 3. Hard (X2 multiplier) \n";
         std::cin >> difficulty;
         return difficulty;
     }
@@ -287,6 +301,29 @@ public:
     void gameFunction()
     {
         int attemptsNum = 6;    //number of attempts at guessing the word
+        std::vector<int> indices;
+        int difficulty; 
+
+        difficulty = chooseDifficulty();         
+        
+        system("CLS");
+        std::cout << "Revealed letters: \n";
+
+        if (difficulty == 1)
+        {
+            indices = randomIndexgenerator(2);
+            printFunction(indices[0], indices[1]);      //printFunction with 2 arguments
+        }
+        else if (difficulty == 2)
+        {
+            indices = randomIndexgenerator(1);
+            printFunction(indices[0]);                  //printFunction with 1 argument
+        }
+        else
+        {
+            printFunction();                            //printFunction with no arguments
+        }
+
         for (int i = 1; i <= attemptsNum; i++)
         {
             std::cout << "\n\nAttempt #" << i << ": " << std::endl;
@@ -296,7 +333,7 @@ public:
             if (word == wordAnswer)
             {
                 std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m" << std::endl;
-                calculatePoints(i, 3);
+                calculatePoints(i, difficulty);
                 i = attemptsNum + 1;      //increment i so that the loop breaks without having to use a break statement
             }
         }
@@ -314,7 +351,7 @@ public:
 
 int main()
 {
-    wordle game;            //creates the object for the wordle class
+    modifiedWordle game;            //creates the object for the wordle class
 
     game.openLibrary("TestDictionary.txt");     //pass the filename of the dictionary as an argument
     game.selectWord();
