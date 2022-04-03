@@ -93,7 +93,7 @@ public:
     //a function used to input the word
     void inputWord()
     {
-        std::cout << "Input: ";
+        std::cout << "Word: ";
         std::cin >> word;
 
         covenverToLower(word);
@@ -102,13 +102,14 @@ public:
         while (!wordExists(word, dictionary) || !fiveLetters(word))
         {
             std::cout << "Error! Either input does not exist in our dictionary, or the input is not 5 letters" << std::endl;
-            std::cout << "Input: ";
+            std::cout << "Word: ";            
             std::cin >> word;
+            //std::cout << "\033[A" << "\33[2K" << "\033[A" << "\33[2K";
             covenverToLower(word);
             wordExists(word, dictionary);
         }
     }
-
+        
     //Primary function of the game: checks if the letter is in the correct space or exists in the word
     void check()
     {
@@ -159,6 +160,8 @@ public:
         }
 
         //Prints Letters
+        std::cout << "\033[A" << "\33[2K";
+        std::cout << "Word: ";
         for (int i = 0; i < word.size(); i++)
         {
             std::cout << WordStat[i] << word[i] << "\x1B[0m";
@@ -167,6 +170,7 @@ public:
 
     void gameFunction()
     {
+        selectWord();
         int attemptsNum = 6;    //number of attempts at guessing the word
         for (int i = 1; i <= attemptsNum; i++)
         {
@@ -188,6 +192,25 @@ public:
         }
     }
 
+
+        void banner()
+    {
+        std::cout <<" #######                                        " << std::endl;
+        std::cout <<" #     # #####  #  ####  # #    #   ##   #      " << std::endl;
+        std::cout <<" #     # #    # # #    # # ##   #  #  #  #      " << std::endl;
+        std::cout <<" #     # #    # # #      # # #  # #    # #      " << std::endl;
+        std::cout <<" #     # #####  # #  ### # #  # # ###### #      " << std::endl;
+        std::cout <<" #     # #   #  # #    # # #   ## #    # #      " << std::endl;
+        std::cout <<" ####### #    # #  ####  # #    # #    # ###### " << std::endl << std::endl;
+
+        std::cout <<"##      ##  #######  ########  ########  ##       ########" << std::endl; 
+        std::cout <<"##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl; 
+        std::cout <<"##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl; 
+        std::cout <<"##  ##  ## ##     ## ########  ##     ## ##       ######  " << std::endl; 
+        std::cout <<"##  ##  ## ##     ## ##   ##   ##     ## ##       ##      " << std::endl; 
+        std::cout <<"##  ##  ## ##     ## ##    ##  ##     ## ##       ##      " << std::endl; 
+        std::cout <<" ###  ###   #######  ##     ## ########  ######## ########" << std::endl << std::endl << std::endl;
+  }
 
 };
 
@@ -274,7 +297,17 @@ public:
     {
         int difficulty;
         std::cout << "Please choose difficulty: \n 1. Easy (X1 multiplier) \n 2. Medium (X1.5 multiplier) \n 3. Hard (X2 multiplier) \n";
+        std::cout << "Choose: ";
         std::cin >> difficulty;
+        while (difficulty > 3 || difficulty < 1)
+        {
+            //ensures choice is 1 or 2 or 3, and an integer
+            std::cout << "Please select either 1, 2 or 3 !" << std::endl;
+            std::cout << "Choose: ";
+            std::cin >> difficulty;
+            std::cin.clear();
+            std::cin.ignore(32767, '\n');
+        }
         return difficulty;
     }
 
@@ -300,6 +333,7 @@ public:
     //Modified version of gameFunction(). This is 'Runtime Polymorphism' - 'Function overriding'.
     void gameFunction()
     {
+        selectWord();
         int attemptsNum = 6;    //number of attempts at guessing the word
         std::vector<int> indices;
         int difficulty; 
@@ -342,22 +376,64 @@ public:
         {
             std::cout << "\x1B[31m" << "\nYOU LOSE :(" << "\x1B[0m" << std::endl;
             std::cout << "Answer: " << wordAnswer << std::endl;
+            std::cout << "Score: " << "\x1B[41m" << 0 << "\x1B[0m" << std::endl;
         }
+
     }
-    
+  
 };
 
 
 
 int main()
 {
-    modifiedWordle game;            //creates the object for the wordle class
+    int choice;
+    wordle baseGame;            //creates the object for the parent wordle class
+    modifiedWordle modGame;     //creates the object for the child modifiedWordle class        
 
-    game.openLibrary("TestDictionary.txt");     //pass the filename of the dictionary as an argument
-    game.selectWord();
-    game.gameFunction();
+    std::cout <<"##      ##  #######  ########  ########  ##       ########" << std::endl; 
+    std::cout <<"##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl; 
+    std::cout <<"##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl; 
+    std::cout <<"##  ##  ## ##     ## ########  ##     ## ##       ######  " << std::endl; 
+    std::cout <<"##  ##  ## ##     ## ##   ##   ##     ## ##       ##      " << std::endl; 
+    std::cout <<"##  ##  ## ##     ## ##    ##  ##     ## ##       ##      " << std::endl; 
+    std::cout <<" ###  ###   #######  ##     ## ########  ######## ########" << std::endl;
 
-    //game.printFunction(0,4);
+    std::cout <<"                                   +-+-+ +-+-+-+-+-+ +-+-+" << std::endl;
+    std::cout <<"                                   |B|y| |G|r|o|u|p| |M|R|" << std::endl;
+    std::cout <<"                                   +-+-+ +-+-+-+-+-+ +-+-+" << std::endl << std::endl << std::endl;
+
+
+
+    std::cout << "Please choose a game mode:" << std::endl;
+    std::cout << "1. Original Wordle game \n2.Modified Wordle game" << std::endl;
+    std::cout << "Choose: ";
+    std::cin >> choice;
+
+    while (choice > 2 || choice < 1)
+    {
+        //ensures choice is 1 or 2, and an integer
+        std::cout << "Please select either 1 or 2 !" << std::endl;
+        std::cout << "Choose: ";
+        std::cin >> choice;
+        std::cin.clear();
+        std::cin.ignore(32767, '\n');
+    }
+
+    if (choice == 1)
+    {
+        system("CLS");
+        baseGame.banner();
+        baseGame.openLibrary("TestDictionary.txt");     //pass the filename of the dictionary as an argument
+        baseGame.gameFunction();
+    }
+    else if (choice == 2)
+    {
+        system("CLS");
+        modGame.banner();
+        modGame.openLibrary("TestDictionary.txt");     //pass the filename of the dictionary as an argument
+        modGame.gameFunction();
+    }
 
 
     return 0;
