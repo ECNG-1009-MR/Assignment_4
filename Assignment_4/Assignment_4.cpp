@@ -225,7 +225,7 @@ class modifiedWordle : public wordle
 {
 public:
     
-
+    //A function used to calculate points based of game difficulty and the attempt at which the answer was found
     void calculatePoints(int attempt, int mode)
     {
         float pointsList[6] = { 100.0, 80.0, 60.0, 40.0, 20.0, 10.0 };
@@ -247,6 +247,8 @@ public:
 
     }
 
+    //The following printFunctions illustrate 'Compiletime Polymorphism' - 'Function overloading'
+    //First printFunction takes 2 indices and prints the 2 revealed letters at their correct spots 
     void printFunction(int index1, int index2)
     {
         if (index1 > index2)
@@ -272,7 +274,7 @@ public:
         }
     }
 
-
+    //Second printFunction takes 1 index and prints the 1 revealed letter at it's correct spots 
     void printFunction(int index)
     {
         for (int i = 0; i < index; i++)
@@ -288,7 +290,7 @@ public:
         }
     }
    
-
+    //Third printFunction takes no arguments, and prints empty spots for all five letters
     void printFunction()
     {
         for (int i = 0; i <  wordAnswer.size(); i++)
@@ -297,13 +299,7 @@ public:
         }
     }
 
-
-
-
-
-
-
-
+    //A function used to choose 
     int chooseDifficulty()
     {
         int difficulty;
