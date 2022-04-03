@@ -93,7 +93,7 @@ public:
         int randIndex;
         std::random_device seed;        //generates a seed for the engine
         std::default_random_engine eng(seed());
-        std::uniform_int_distribution <int> range(0, dictionary.size());
+        std::uniform_int_distribution <int> range(0, dictionary.size()-1);
 
         randIndex = range(eng);
         wordAnswer = dictionary[randIndex];
