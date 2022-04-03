@@ -87,7 +87,7 @@ public:
         std::uniform_int_distribution <int> range(0, dictionary.size());
 
         randIndex = range(eng);
-        wordAnswer = dictionary[randIndex];
+        wordAnswer = "squid";//dictionary[randIndex];
         std::cout << "Answer: " << wordAnswer << std::endl;
     }
 
@@ -105,7 +105,6 @@ public:
             std::cout << "Error! Either input does not exist in our dictionary, or the input is not 5 letters" << std::endl;
             std::cout << "Word: ";            
             std::cin >> word;
-            //std::cout << "\033[A" << "\33[2K" << "\033[A" << "\33[2K";
             covenverToLower(word);
             wordExists(word, dictionary);
         }
@@ -226,8 +225,6 @@ class modifiedWordle : public wordle
 {
 public:
     
-    //random index generator
-    //print functions
 
     void calculatePoints(int attempt, int mode)
     {
@@ -249,17 +246,35 @@ public:
         std::cout << "Score: " << "\x1B[42m" << points << "\x1B[0m" << std::endl;
 
     }
-   
-    void printFunction()
+
+    void printFunction(int index1, int index2)
     {
-        for (int i = 0; i <  wordAnswer.size(); i++)
+        if (index1 > index2)
+        {
+            int tmp = index2;
+            index2 = index1;
+            index1 = tmp;
+        }
+
+        for (int i = 0; i < index1; i++)
+        {
+            std::cout << "_ ";
+        }
+        std::cout << "\x1B[42m" << wordAnswer[index1] << "\x1B[0m" << " ";
+        for (int i = index1 + 1; i < index2; i++)
+        {
+            std::cout << "_ ";
+        }
+        std::cout << "\x1B[42m" << wordAnswer[index2] << "\x1B[0m" << " ";
+        for (int i = index2 + 1; i < wordAnswer.size(); i++)
         {
             std::cout << "_ ";
         }
     }
 
+
     void printFunction(int index)
-    {        
+    {
         for (int i = 0; i < index; i++)
         {
             std::cout << "_ ";
@@ -272,31 +287,19 @@ public:
             std::cout << "_ ";
         }
     }
+   
 
-    void printFunction(int index1, int index2)
-    {        
-        if( index1 > index2 )
-        {
-            int tmp = index2;
-            index2 = index1;
-            index1 = tmp;
-        }
-
-        for (int i = 0; i < index1; i++)
-        {
-            std::cout << "_ ";
-        }
-        std::cout << "\x1B[42m" << wordAnswer[index1] << "\x1B[0m" << " ";
-        for (int i = index1+1; i < index2; i++)
-        {
-            std::cout << "_ ";
-        }
-        std::cout << "\x1B[42m" << wordAnswer[index2] << "\x1B[0m" << " ";
-        for (int i = index2+1; i < wordAnswer.size(); i++)
+    void printFunction()
+    {
+        for (int i = 0; i <  wordAnswer.size(); i++)
         {
             std::cout << "_ ";
         }
     }
+
+
+
+
 
 
 
@@ -380,7 +383,7 @@ public:
             check();
 
             if (word == wordAnswer)
-            {
+            {               
                 winBanner();
                 calculatePoints(i, difficulty);
                 i = attemptsNum + 1;      //increment i so that the loop breaks without having to use a break statement
