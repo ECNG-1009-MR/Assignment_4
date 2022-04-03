@@ -5,7 +5,7 @@
 #include <random>
 #include <cmath>
 #include <algorithm>
-#include <map>
+
 
 
 //A class for all the functionality of the original Wordle game
@@ -168,6 +168,22 @@ public:
         }
     }
 
+    void winBanner()
+    {
+        std::cout << "\x1B[32m\n";
+        std::cout <<"             ___________" << std::endl;	
+        std::cout <<"            '._==_==_=_.'" << std::endl;	
+        std::cout <<"            .-\\:      /-." << std::endl;	
+        std::cout <<"           | (|:.     |) |     ##    ##  #######  ##     ##    ##      ## #### ##    ##  ####" << std::endl; 
+        std::cout <<"            '-|:.     |-'       ##  ##  ##     ## ##     ##    ##  ##  ##  ##  ###   ##  ####" << std::endl; 
+        std::cout <<"              \\::.    /          ####   ##     ## ##     ##    ##  ##  ##  ##  ####  ##  ####" << std::endl; 
+        std::cout <<"               '::. .'            ##    ##     ## ##     ##    ##  ##  ##  ##  ## ## ##   ##" << std::endl; 
+        std::cout <<"                 ) (              ##    ##     ## ##     ##    ##  ##  ##  ##  ##  ####" << std::endl; 
+        std::cout <<"               _.' '._            ##    ##     ## ##     ##    ##  ##  ##  ##  ##   ###  ####" << std::endl; 
+        std::cout <<"              `-------`           ##     #######   #######      ###  ###  #### ##    ##  ####" << std::endl; 
+        std::cout << "\x1B[0m";
+    }
+
     void gameFunction()
     {
         selectWord();
@@ -180,37 +196,25 @@ public:
 
             if (word == wordAnswer)
             {
-                std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m";
+                winBanner();
                 i = attemptsNum + 1;      //increment i so that the loop breaks without having to use a break statement
             }
         }
 
         if (word != wordAnswer)
         {
-            std::cout << "\x1B[31m" << "\nYOU LOSE :(" << "\x1B[0m" << std::endl;
+            std::cout << "\x1B[31m" << "\n YOU LOSE :(" << "\x1B[0m" << std::endl;
             std::cout << "Answer: " << wordAnswer << std::endl;
         }
     }
 
 
-        void banner()
+    void banner()
     {
-        std::cout <<" #######                                        " << std::endl;
-        std::cout <<" #     # #####  #  ####  # #    #   ##   #      " << std::endl;
-        std::cout <<" #     # #    # # #    # # ##   #  #  #  #      " << std::endl;
-        std::cout <<" #     # #    # # #      # # #  # #    # #      " << std::endl;
-        std::cout <<" #     # #####  # #  ### # #  # # ###### #      " << std::endl;
-        std::cout <<" #     # #   #  # #    # # #   ## #    # #      " << std::endl;
-        std::cout <<" ####### #    # #  ####  # #    # #    # ###### " << std::endl << std::endl;
-
-        std::cout <<"##      ##  #######  ########  ########  ##       ########" << std::endl; 
-        std::cout <<"##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl; 
-        std::cout <<"##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl; 
-        std::cout <<"##  ##  ## ##     ## ########  ##     ## ##       ######  " << std::endl; 
-        std::cout <<"##  ##  ## ##     ## ##   ##   ##     ## ##       ##      " << std::endl; 
-        std::cout <<"##  ##  ## ##     ## ##    ##  ##     ## ##       ##      " << std::endl; 
-        std::cout <<" ###  ###   #######  ##     ## ########  ######## ########" << std::endl << std::endl << std::endl;
-  }
+        std::cout <<" +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+ " << std::endl;
+        std::cout <<" |O| |r| |i| |g| |i| |n| |a| |l|   |W| |o| |r| |d| |l| |e| " << std::endl;
+        std::cout <<" +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+ " << std::endl << std::endl << std::endl;
+    }
 
 };
 
@@ -297,7 +301,7 @@ public:
     {
         int difficulty;
         std::cout << "Please choose difficulty: \n 1. Easy (X1 multiplier) \n 2. Medium (X1.5 multiplier) \n 3. Hard (X2 multiplier) \n";
-        std::cout << "Choose: ";
+        std::cout << "\nChoose: ";
         std::cin >> difficulty;
         while (difficulty > 3 || difficulty < 1)
         {
@@ -329,6 +333,12 @@ public:
         return index;
     }
 
+    void banner()
+    {
+        std::cout << " +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+ " << std::endl;
+        std::cout << " |M| |o| |d| |i| |f| |i| |e| |d|   |W| |o| |r| |d| |l| |e| " << std::endl;
+        std::cout << " +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+ " << std::endl << std::endl << std::endl;
+    }
 
     //Modified version of gameFunction(). This is 'Runtime Polymorphism' - 'Function overriding'.
     void gameFunction()
@@ -341,6 +351,7 @@ public:
         difficulty = chooseDifficulty();         
         
         system("CLS");
+        banner();
         std::cout << "Revealed letters: \n";
 
         if (difficulty == 1)
@@ -366,7 +377,7 @@ public:
 
             if (word == wordAnswer)
             {
-                std::cout << "\x1B[32m" << "\nYOU WIN!" << "\x1B[0m" << std::endl;
+                winBanner();
                 calculatePoints(i, difficulty);
                 i = attemptsNum + 1;      //increment i so that the loop breaks without having to use a break statement
             }
@@ -381,6 +392,8 @@ public:
 
     }
   
+
+
 };
 
 
@@ -406,8 +419,8 @@ int main()
 
 
     std::cout << "Please choose a game mode:" << std::endl;
-    std::cout << "1. Original Wordle game \n2.Modified Wordle game" << std::endl;
-    std::cout << "Choose: ";
+    std::cout << "1. Original Wordle game \n2. Modified Wordle game" << std::endl;
+    std::cout << "\nChoose: ";
     std::cin >> choice;
 
     while (choice > 2 || choice < 1)
@@ -435,6 +448,7 @@ int main()
         modGame.gameFunction();
     }
 
+    std::cout << "\n\nThank you for playing!" << std::endl;
 
     return 0;
 }
