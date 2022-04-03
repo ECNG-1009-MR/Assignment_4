@@ -72,10 +72,19 @@ public:
         std::string fiveLetterWord;
         std::ifstream inputfile;
         inputfile.open(dictionaryFile);
-        while (getline(inputfile, fiveLetterWord))
+        if (!inputfile.is_open())
         {
-            dictionary.push_back(fiveLetterWord);
+            std::cout << "Error! Dictionary not found!" << std::endl;
+            exit(1);
         }
+        else
+        {
+            while (getline(inputfile, fiveLetterWord))
+            {
+                dictionary.push_back(fiveLetterWord);
+            }
+        }
+        
     }
 
     //a function to randomly select a word from the dictionary
@@ -87,8 +96,8 @@ public:
         std::uniform_int_distribution <int> range(0, dictionary.size());
 
         randIndex = range(eng);
-        wordAnswer = "squid";//dictionary[randIndex];
-        std::cout << "Answer: " << wordAnswer << std::endl;
+        wordAnswer = dictionary[randIndex];
+        //std::cout << "Answer: " << wordAnswer << std::endl;   //for testing purposes
     }
 
     //a function used to input the word
@@ -306,11 +315,11 @@ public:
         }
     }
 
-    //A function used to choose 
+    //A function used to allow user to choose between Easy, Medium or Hard difficulty 
     int chooseDifficulty()
     {
         int difficulty;
-        std::cout << "Please choose difficulty: \n 1. Easy (X1 multiplier) \n 2. Medium (X1.5 multiplier) \n 3. Hard (X2 multiplier) \n";
+        std::cout << "Please choose difficulty: \n \x1B[32m 1. Easy \n \x1B[33m 2. Medium \n \x1B[31m 3. Hard \n \x1B[0m";
         std::cout << "\nChoose: ";
         std::cin >> difficulty;
         while (difficulty > 3 || difficulty < 1)
@@ -325,6 +334,7 @@ public:
         return difficulty;
     }
 
+    //A function used to pick random letters to reveal depending on the difficulty level
     std::vector<int> randomIndexgenerator(int choice)
     {
         srand(time(NULL));
@@ -343,6 +353,7 @@ public:
         return index;
     }
 
+    //Modified version of the banner function. This is 'Runtime Polymorphism' - 'Function overriding'.
     void banner()
     {
         std::cout << " +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+ " << std::endl;
@@ -447,14 +458,14 @@ int main()
     {
         system("CLS");
         baseGame.banner();
-        baseGame.openLibrary("TestDictionary.txt");     //pass the filename of the dictionary as an argument
+        baseGame.openLibrary("Dictionary.txt");     //pass the filename of the dictionary as an argument
         baseGame.gameFunction();
     }
     else if (choice == 2)
     {
         system("CLS");
         modGame.banner();
-        modGame.openLibrary("TestDictionary.txt");     //pass the filename of the dictionary as an argument
+        modGame.openLibrary("Dictionary.txt");     //pass the filename of the dictionary as an argument
         modGame.gameFunction();
     }
 
