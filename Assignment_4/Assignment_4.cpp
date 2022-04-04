@@ -463,7 +463,7 @@ int main()
     std::cout << "\nChoose: ";
     std::cin >> choice;
 
-    while (choice > 3 || choice < 1)
+    while (choice > 2 || choice < 1)
     {
         //ensures choice is 1 or 2, and an integer
         std::cout << "Please type either 1 or 2 !" << std::endl;
