@@ -1,3 +1,15 @@
+/*Program by Group MR
+Members:
+1)Nathan Ragoobar
+2)Nyckel St. Louis
+3)Matthias Elliot
+4)Nikolai Pillai
+5)Quinton Aleong
+6)Rajiv Sahadeo
+7)Chad Moore
+8)Matthew Williams
+*/
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -47,7 +59,7 @@ class wordle
     }
 
     //A function to convert all letters in a provided string to lower-case
-    void covenverToLower(std::string& word)
+    void convertToLower(std::string& word)
     {
         for (int z = 0; z < word.size(); z++)
         {
@@ -106,7 +118,7 @@ public:
         std::cout << "Word: ";
         std::cin >> word;
 
-        covenverToLower(word);
+        convertToLower(word);
 
 
         while (!wordExists(word, dictionary) || !fiveLetters(word))
@@ -114,7 +126,7 @@ public:
             std::cout << "Error! Either input does not exist in our dictionary, or the input is not 5 letters" << std::endl;
             std::cout << "Word: ";            
             std::cin >> word;
-            covenverToLower(word);
+            convertToLower(word);
             wordExists(word, dictionary);
         }
     }
@@ -199,6 +211,7 @@ public:
     {
         selectWord();
         int attemptsNum = 6;    //number of attempts at guessing the word
+        std::cout << "Please guess the FIVE letter word!";
         for (int i = 1; i <= attemptsNum; i++)
         {
             std::cout << "\n\nAttempt #" << i << ": " << std::endl;
@@ -214,7 +227,7 @@ public:
 
         if (word != wordAnswer)
         {
-            std::cout << "\x1B[31m" << "\n YOU LOSE :(" << "\x1B[0m" << std::endl;
+            std::cout << "\x1B[31m" << "\n\nYOU LOSE :(" << "\x1B[0m" << std::endl;
             std::cout << "Answer: " << wordAnswer << std::endl;
         }
     }
@@ -319,7 +332,10 @@ public:
     int chooseDifficulty()
     {
         int difficulty;
-        std::cout << "Please choose difficulty: \n \x1B[32m 1. Easy \n \x1B[33m 2. Medium \n \x1B[31m 3. Hard \n \x1B[0m";
+        std::cout << "Please choose difficulty by typing 1, 2 or 3:" << std::endl;
+        std::cout << " \x1B[32m 1. Easy (Reveals 2 letters)" << std::endl; 
+        std::cout << " \x1B[33m 2. Medium (Reveals 1 letter)" << std::endl;
+        std::cout << " \x1B[31m 3. Hard (Reveals No letters) \x1B[0m" << std::endl;
         std::cout << "\nChoose: ";
         std::cin >> difficulty;
         while (difficulty > 3 || difficulty < 1)
@@ -373,6 +389,7 @@ public:
         
         system("CLS");
         banner();
+        std::cout << "Please guess the FIVE letter word!" << std::endl;
         std::cout << "Revealed letters: \n";
 
         if (difficulty == 1)
@@ -406,7 +423,7 @@ public:
 
         if (word != wordAnswer)
         {
-            std::cout << "\x1B[31m" << "\nYOU LOSE :(" << "\x1B[0m" << std::endl;
+            std::cout << "\x1B[31m" << "\n\nYOU LOSE :(" << "\x1B[0m" << std::endl;
             std::cout << "Answer: " << wordAnswer << std::endl;
             std::cout << "Score: " << "\x1B[41m" << 0 << "\x1B[0m" << std::endl;
         }
@@ -418,36 +435,38 @@ public:
 };
 
 
+void mainMenuBanner()
+{
+    std::cout << "##      ##  #######  ########  ########  ##       ########" << std::endl;
+    std::cout << "##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl;
+    std::cout << "##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl;
+    std::cout << "##  ##  ## ##     ## ########  ##     ## ##       ######  " << std::endl;
+    std::cout << "##  ##  ## ##     ## ##   ##   ##     ## ##       ##      " << std::endl;
+    std::cout << "##  ##  ## ##     ## ##    ##  ##     ## ##       ##      " << std::endl;
+    std::cout << " ###  ###   #######  ##     ## ########  ######## ########" << std::endl;
+
+    std::cout << "                                   +-+-+ +-+-+-+-+-+ +-+-+" << std::endl;
+    std::cout << "                                   |B|y| |G|r|o|u|p| |M|R|" << std::endl;
+    std::cout << "                                   +-+-+ +-+-+-+-+-+ +-+-+" << std::endl << std::endl << std::endl;
+}
 
 int main()
 {
     int choice;
     wordle baseGame;            //creates the object for the parent wordle class
-    modifiedWordle modGame;     //creates the object for the child modifiedWordle class        
+    modifiedWordle modGame;     //creates the object for the child modifiedWordle class     
 
-    std::cout <<"##      ##  #######  ########  ########  ##       ########" << std::endl; 
-    std::cout <<"##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl; 
-    std::cout <<"##  ##  ## ##     ## ##     ## ##     ## ##       ##      " << std::endl; 
-    std::cout <<"##  ##  ## ##     ## ########  ##     ## ##       ######  " << std::endl; 
-    std::cout <<"##  ##  ## ##     ## ##   ##   ##     ## ##       ##      " << std::endl; 
-    std::cout <<"##  ##  ## ##     ## ##    ##  ##     ## ##       ##      " << std::endl; 
-    std::cout <<" ###  ###   #######  ##     ## ########  ######## ########" << std::endl;
+    mainMenuBanner();
 
-    std::cout <<"                                   +-+-+ +-+-+-+-+-+ +-+-+" << std::endl;
-    std::cout <<"                                   |B|y| |G|r|o|u|p| |M|R|" << std::endl;
-    std::cout <<"                                   +-+-+ +-+-+-+-+-+ +-+-+" << std::endl << std::endl << std::endl;
-
-
-
-    std::cout << "Please choose a game mode:" << std::endl;
+    std::cout << "Please choose a game mode by typing 1 or 2:" << std::endl;
     std::cout << "1. Original Wordle game \n2. Modified Wordle game" << std::endl;
     std::cout << "\nChoose: ";
     std::cin >> choice;
 
-    while (choice > 2 || choice < 1)
+    while (choice > 3 || choice < 1)
     {
         //ensures choice is 1 or 2, and an integer
-        std::cout << "Please select either 1 or 2 !" << std::endl;
+        std::cout << "Please type either 1 or 2 !" << std::endl;
         std::cout << "Choose: ";
         std::cin >> choice;
         std::cin.clear();
